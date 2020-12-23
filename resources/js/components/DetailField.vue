@@ -1,5 +1,5 @@
 <template>
-    <vimeo-embed :id="field.id"/>
+    <vimeo-embed :id="field.value"/>
 </template>
 
 <script>
