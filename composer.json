@@ -13,13 +13,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Twotp\\VideoUpload\\": "src/"
+            "State\\VideoUpload\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Twotp\\VideoUpload\\FieldServiceProvider"
+                "State\\VideoUpload\\FieldServiceProvider"
             ]
         }
     },

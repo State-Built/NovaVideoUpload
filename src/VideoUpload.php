@@ -1,6 +1,6 @@
 <?php
 
-namespace Twotp\VideoUpload;
+namespace State\VideoUpload;
 
 use App\Film\VideoProvider;
 use Laravel\Nova\Fields\Field;

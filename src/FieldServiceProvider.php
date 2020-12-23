@@ -1,6 +1,6 @@
 <?php
 
-namespace Twotp\VideoUpload;
+namespace State\VideoUpload;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;

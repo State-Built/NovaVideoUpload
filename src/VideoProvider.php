@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Film;
+namespace State\VideoUpload;
 
 
 interface VideoProvider
