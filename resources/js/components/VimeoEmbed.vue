@@ -5,7 +5,7 @@
 
 <script>
 export default {
-    name: 'Embed',
+    name: 'VimeoEmbed',
     props: ['id'],
     computed: {
         iframeSrc() {

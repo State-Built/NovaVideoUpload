@@ -1,11 +1,11 @@
 <template>
-    <embed :id="field.value"/>
+    <vimeo-embed :id="field.value"/>
 </template>
 
 <script>
-import Embed from './Embed';
+import VimeoEmbed from './VimeoEmbed';
 export default {
-    components: {Embed},
+    components: {VimeoEmbed},
     props: ['resourceName', 'field'],
 }
 </script>
