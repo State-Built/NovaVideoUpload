@@ -34,9 +34,10 @@ class VideoUpload extends Field
             $model->{$attribute} = $this->isNullValue($value) ?
                 null :
                 $this->uploadVideo($request, $value);
+
+            VideoUploaded::dispatch($model, $value);
         }
     }
-
 
     protected function uploadVideo(NovaRequest $request, string $filename) : int
     {
