@@ -27,9 +27,11 @@ class VideoUpload extends Field
         return $this;
     }
 
-    public function videoPrivacy(string $privacy)
+    public function videoPrivacy(string $privacy) : self
     {
         $this->videoPrivacy = $privacy;
+
+        return $this;
     }
 
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
