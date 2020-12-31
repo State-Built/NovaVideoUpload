@@ -55,9 +55,9 @@ class VideoUpload extends Field
         $uri = \Vimeo::upload(
             \Storage::path('tmp/videos/' . $filename),
             [
-                'name'         => $request->input($this->titleAttribute),
-                'description'  => $request->input($this->descriptionAttribute),
-                'privacy.view' => $this->videoPrivacy,
+                'name'        => $request->input($this->titleAttribute),
+                'description' => $request->input($this->descriptionAttribute),
+                'privacy'     => ['view' => $this->videoPrivacy],
             ]
         );
 
