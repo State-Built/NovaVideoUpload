@@ -11,6 +11,7 @@ class VideoUpload extends Field
     public         $component            = 'video-upload';
     private string $titleAttribute       = 'title';
     private string $descriptionAttribute = 'description';
+    private string $videoPrivacy         = 'anybody';
 
     public function titleAttribute(string $attribute) : self
     {
@@ -24,6 +25,11 @@ class VideoUpload extends Field
         $this->descriptionAttribute = $attribute;
 
         return $this;
+    }
+
+    public function videoPrivacy(string $privacy)
+    {
+        $this->videoPrivacy = $privacy;
     }
 
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
@@ -43,7 +49,11 @@ class VideoUpload extends Field
     {
         $uri = \Vimeo::upload(
             \Storage::path('tmp/videos/' . $filename),
-            ['name' => $request->input($this->titleAttribute), 'description' => $request->input($this->descriptionAttribute)]
+            [
+                'name'         => $request->input($this->titleAttribute),
+                'description'  => $request->input($this->descriptionAttribute),
+                'privacy.view' => $this->videoPrivacy,
+            ]
         );
 
         // Just grab the id and convert to int.
