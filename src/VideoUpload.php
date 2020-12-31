@@ -39,11 +39,14 @@ class VideoUpload extends Field
         if($request->exists($requestAttribute)) {
             $value = $request[$requestAttribute];
 
-            $model->{$attribute} = $this->isNullValue($value) ?
-                null :
-                $this->uploadVideo($request, $value);
+            if(!$this->isNullValue($value)) {
+                $model->{$attribute} = $this->uploadVideo($request, $value);
+                VideoUploaded::dispatch($model, $value);
+            }
+            else {
+                $model->{$attribute} = null;
+            }
 
-            VideoUploaded::dispatch($model, $value);
         }
     }
 
