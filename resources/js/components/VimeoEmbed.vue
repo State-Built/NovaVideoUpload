@@ -1,5 +1,5 @@
 <template>
-    <iframe :src="iframeSrc" frameborder="0" allow="autoplay; fullscreen"
+    <iframe :src="iframeSrc" dusk="vimeo-embed" frameborder="0" allow="autoplay; fullscreen"
             allowfullscreen></iframe>
 </template>
 
