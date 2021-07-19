@@ -1,7 +1,7 @@
 <template>
     <default-field :field="field" :errors="errors" :show-help-text="showHelpText">
         <template slot="field">
-            <dashboard :uppy="uppy"/>
+            <dashboard :uppy="uppy" :props="uppyProps"/>
         </template>
     </default-field>
 </template>
@@ -27,15 +27,25 @@ export default {
                 allowMultipleUploads: false,
                 debug: true,
                 restrictions: {
-                    allowedFileTypes: null,
+                    allowedFileTypes: ['video/*'],
+                    maxNumberOfFiles: 1,
+                    minNumberOfFiles: 1,
                 },
             }).use(Tus, {
-                endpoint: "/nova-tus",
+                endpoint: '/nova-tus',
                 resume: true,
                 retryDelays: [0, 1000, 3000, 5000],
                 chunkSize: 1000000,
             });
         },
+
+        uppyProps() {
+            return {
+                doneButtonHandler: () => {
+                    // disable this so value doesn't reset to null.
+                },
+            }
+        }
     },
 
     methods: {
