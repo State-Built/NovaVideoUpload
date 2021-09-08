@@ -1,7 +1,13 @@
 <template>
     <default-field :field="field" :errors="errors" :show-help-text="showHelpText">
         <template slot="field">
-            <dashboard :uppy="uppy" :props="uppyProps"/>
+            <div class="flex" v-if="field.value">
+                <vimeo-embed :id="field.value"/>
+                <button class="btn btn-default btn-icon btn-white ml-4" title="Replace Video" @click.prevent="field.value = null">
+                    <icon type="restore" class="text-80" />
+                </button>
+            </div>
+            <dashboard v-if="!field.value" :uppy="uppy" :props="uppyProps"/>
         </template>
     </default-field>
 </template>
@@ -13,11 +19,12 @@ import Uppy                                 from '@uppy/core';
 import Tus                                  from '@uppy/tus';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
+import VimeoEmbed                           from './VimeoEmbed';
 
 export default {
     mixins: [FormField, HandlesValidationErrors],
 
-    components: {Dashboard},
+    components: {VimeoEmbed, Dashboard},
 
     props: ['resourceName', 'resourceId', 'field'],
 
@@ -45,7 +52,8 @@ export default {
                     // disable this so value doesn't reset to null.
                 },
             }
-        }
+        },
+
     },
 
     methods: {
