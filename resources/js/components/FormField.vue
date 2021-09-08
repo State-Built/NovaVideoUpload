@@ -1,13 +1,29 @@
 <template>
-    <default-field :field="field" :errors="errors" :show-help-text="showHelpText">
+    <default-field :field="field" :errors="errors" :show-help-text="showHelpText" full-width-content>
         <template slot="field">
             <div class="flex" v-if="field.value">
                 <vimeo-embed :id="field.value"/>
-                <button class="btn btn-default btn-icon btn-white ml-4" title="Replace Video" @click.prevent="field.value = null">
-                    <icon type="restore" class="text-80" />
+                <button class="btn btn-default btn-icon btn-white ml-4" title="Replace Video"
+                        @click.prevent="field.value = null">
+                    <icon type="restore" class="text-80"/>
                 </button>
             </div>
-            <dashboard v-if="!field.value" :uppy="uppy" :props="uppyProps"/>
+            <div class="flex" v-if="showUppy">
+                <dashboard :uppy="uppy" :props="uppyProps"/>
+                <div>
+                    <button class="btn btn-default btn-primary ml-4" title="Replace Video"
+                            @click.prevent="showIdInput = !showIdInput">
+                        use vimeo id
+                    </button>
+                </div>
+            </div>
+            <div class="flex" v-if="showIdInput">
+                <input class="form-control form-input form-input-bordered" v-model="value">
+                <button class="btn btn-default btn-primary ml-4" title="Replace Video"
+                        @click.prevent="showIdInput = !showIdInput">
+                    upload video
+                </button>
+            </div>
         </template>
     </default-field>
 </template>
@@ -54,6 +70,15 @@ export default {
             }
         },
 
+        showUppy() {
+            return !this.field.value && !this.showIdInput;
+        },
+    },
+
+    data() {
+        return {
+            showIdInput: false,
+        }
     },
 
     methods: {

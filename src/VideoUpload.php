@@ -49,14 +49,23 @@ class VideoUpload extends Field
             $value = $request[$requestAttribute];
 
             if(!$this->isNullValue($value)) {
-                if($model->{$this->providerIdAttribute} == null) {
-                    $model->{$attribute} = $this->uploadVideo($request, $value);
+
+                // exit if we're not changing anything.
+                if($value == $model->{$this->providerIdAttribute}) {
+                    return;
                 }
-                elseif($value == $model->{$this->providerIdAttribute}) {
-                    // neutral jing
+
+                // update id if that's all we're doing
+                if($this->isVimeoId($value)) {
+                    $model->{$attribute} = $value;
                 }
-                else {
-                    $this->replaceVideo($request, $value, $model);
+                else { // otherwise upload.
+                    if($request->isCreateOrAttachRequest()) { // fresh upload on create.
+                        $model->{$attribute} = $this->uploadVideo($request, $value);
+                    }
+                    else { // upload replacement otherwise.
+                        $this->replaceVideo($request, $value, $model);
+                    }
                 }
             }
             else {
@@ -96,6 +105,11 @@ class VideoUpload extends Field
     protected function getVimeoIdFromUri($uri) : int
     {
         return (int)substr($uri, strlen('/videos/'));
+    }
+
+    private function isVimeoId($value) : bool
+    {
+        return (bool)(int)($value);
     }
 
 }
