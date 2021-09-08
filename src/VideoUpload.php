@@ -52,6 +52,9 @@ class VideoUpload extends Field
                 if($model->{$this->providerIdAttribute} == null) {
                     $model->{$attribute} = $this->uploadVideo($request, $value);
                 }
+                elseif($value == $model->{$this->providerIdAttribute}) {
+                    // neutral jing
+                }
                 else {
                     $this->replaceVideo($request, $value, $model);
                 }
