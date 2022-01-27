@@ -5,7 +5,7 @@ namespace State\VideoUpload;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
-use Route;
+use Illuminate\Support\Facades\Route;
 use TusPhp\Tus\Server as TusServer;
 
 class FieldServiceProvider extends ServiceProvider
@@ -36,7 +36,7 @@ class FieldServiceProvider extends ServiceProvider
     public function registerTusServer()
     {
         $this->app->singleton('tus-server', function($app) {
-            $server = new TusServer('redis');
+            $server = new TusServer();
 
             $server->setApiPath('/nova-tus')
                    ->setUploadDir(\Storage::path('tmp/videos'));
