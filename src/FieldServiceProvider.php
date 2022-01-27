@@ -2,10 +2,11 @@
 
 namespace State\VideoUpload;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
-use Illuminate\Support\Facades\Route;
+use TusPhp\Config as TusConfig;
 use TusPhp\Tus\Server as TusServer;
 
 class FieldServiceProvider extends ServiceProvider
@@ -17,7 +18,7 @@ class FieldServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Nova::serving(function(ServingNova $event) {
+        Nova::serving(function (ServingNova $event) {
             Nova::script('video-upload', __DIR__ . '/../dist/js/field.js');
             Nova::style('video-upload', __DIR__ . '/../dist/css/field.css');
         });
@@ -35,7 +36,14 @@ class FieldServiceProvider extends ServiceProvider
 
     public function registerTusServer()
     {
-        $this->app->singleton('tus-server', function($app) {
+        $this->app->singleton('tus-server', function ($app) {
+            TusConfig::set([
+                'file' => [
+                    'dir'  => storage_path('tus_cache/'),
+                    'name' => 'tusphp.cache',
+                ],
+            ]);
+
             $server = new TusServer();
 
             $server->setApiPath('/nova-tus')
