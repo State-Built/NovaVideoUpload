@@ -105,6 +105,8 @@ export default {
         this.uppy.on('upload-success', (file, response) => {
             this.value = file.name;
         });
+
+        console.info(this.tusEndpoint);
     },
 
 }
