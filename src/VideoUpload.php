@@ -2,6 +2,7 @@
 
 namespace State\VideoUpload;
 
+use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -110,6 +111,13 @@ class VideoUpload extends Field
     private function isVimeoId($value) : bool
     {
         return (bool)(int)($value);
+    }
+
+    public function meta()
+    {
+        return array_merge(parent::meta(), [
+          'tusEndpoint' => route('nova.tus'),
+        ]);
     }
 
 }

@@ -55,7 +55,7 @@ export default {
                     minNumberOfFiles: 1,
                 },
             }).use(Tus, {
-                endpoint: '/nova-tus',
+                endpoint: this.tusEndpoint,
                 resume: true,
                 retryDelays: [0, 1000, 3000, 5000],
                 chunkSize: 1000000,
@@ -73,6 +73,10 @@ export default {
         showUppy() {
             return !this.field.value && !this.showIdInput;
         },
+
+        tusEndpoint() {
+            return this.field.tusEndpoint;
+        }
     },
 
     data() {

@@ -53,7 +53,7 @@ class FieldServiceProvider extends ServiceProvider
         });
 
         Route::any('/nova-tus/{any?}', fn() => $this->app->make('tus-server')->serve())
-             ->where('any', '.*');
+             ->where('any', '.*')->name('nova.tus');
     }
 
 }
