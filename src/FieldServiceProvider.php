@@ -36,14 +36,14 @@ class FieldServiceProvider extends ServiceProvider
 
     public function registerTusServer()
     {
-        $this->app->singleton('tus-server', function ($app) {
-            TusConfig::set([
-                'file' => [
-                    'dir'  => storage_path('tus_cache/'),
-                    'name' => 'tusphp.cache',
-                ],
-            ]);
+        TusConfig::set([
+            'file' => [
+                'dir'  => storage_path('tus_cache/'),
+                'name' => 'tusphp.cache',
+            ],
+        ]);
 
+        $this->app->singleton('tus-server', function ($app) {
             $server = new TusServer();
 
             $server->setApiPath('/nova-tus')
