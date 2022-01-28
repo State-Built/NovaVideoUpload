@@ -116,7 +116,7 @@ class VideoUpload extends Field
     public function meta()
     {
         return array_merge(parent::meta(), [
-          'tusEndpoint' => route('nova.tus'),
+          'tusEndpoint' => route('nova.tus') . '/',
         ]);
     }
 
