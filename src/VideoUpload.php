@@ -2,6 +2,7 @@
 
 namespace State\VideoUpload;
 
+use JetBrains\PhpStorm\ArrayShape;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -87,11 +88,7 @@ class VideoUpload extends Field
     {
         $uri = \Vimeo::upload(
             \Storage::path('tmp/videos/' . $filename),
-            [
-                'name'        => $request->input($this->titleAttribute),
-                'description' => $request->input($this->descriptionAttribute),
-                'privacy'     => ['view' => $this->videoPrivacy, 'embed' => $this->embedPrivacy],
-            ]
+            $this->videoMetaData($request),
         );
 
         return $this->getVimeoIdFromUri($uri);
@@ -102,12 +99,17 @@ class VideoUpload extends Field
         \Vimeo::replace(
             '/videos/' . $model->{$this->providerIdAttribute},
             \Storage::path('tmp/videos/' . $filename),
-            [
-                'name'        => $request->input($this->titleAttribute),
-                'description' => $request->input($this->descriptionAttribute),
-                'privacy'     => ['view' => $this->videoPrivacy],
-            ],
+            $this->videoMetaData($request),
         );
+    }
+
+    protected function videoMetaData(NovaRequest $request) : array
+    {
+        return [
+            'name'        => $request->input($this->titleAttribute),
+            'description' => $request->input($this->descriptionAttribute),
+            'privacy'     => ['view' => $this->videoPrivacy, 'embed' => $this->embedPrivacy],
+        ];
     }
 
     protected function getVimeoIdFromUri($uri) : int
